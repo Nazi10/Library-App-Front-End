@@ -19,7 +19,6 @@ export function User(){
             })
                 .then(function
                     (response) {
-                    console.log(response);
                     setUsers(response.data)
                 }).catch(function (error) {
                 console.log(error);

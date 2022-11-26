@@ -29,7 +29,6 @@ export const EditUser = ({user}) => {
                 signal: controller.signal
             }).then(function
                 (response) {
-                console.log(response);
                 setRoles(response.data)
             }).catch(function (error) {
                 console.log(error);
@@ -44,8 +43,6 @@ export const EditUser = ({user}) => {
             signal: controller.signal,
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(updateUser)
-        }).then((res) => {
-            return res
         })
     }
 
@@ -70,6 +67,7 @@ export const EditUser = ({user}) => {
                                value={name}
                                placeholder="Name"
                                onChange={(e) => setName(e.target.value)}
+                               required
                         ></input>
                         <p/>
                         <input className="form-control"
@@ -84,6 +82,7 @@ export const EditUser = ({user}) => {
                                value={username}
                                placeholder="Username"
                                onChange={(e) => setUsername(e.target.value)}
+                               required
                         ></input>
                         <p/>
                         <input className="form-control"
@@ -91,6 +90,7 @@ export const EditUser = ({user}) => {
                                value={email}
                                placeholder="Email"
                                onChange={(e) => setEmail(e.target.value)}
+                               required
                         ></input>
                         <p/>
                         <input className="form-control"
@@ -98,11 +98,14 @@ export const EditUser = ({user}) => {
                                value={password}
                                placeholder="Password"
                                onChange={(e) => setPassword(e.target.value)}
+                               required
                         ></input>
                         <p/>
                         <select className="form-select"
                                 onChange={(e) => setRoleId(e.target.value)}
-                                value={roleId}>
+                                value={roleId}
+                                required>
+                            <option value={''} hidden> Select Author </option>
                             {roles.map(role => <option value={role.id} key={role.id}>
                                 {role.name}
                             </option>)}

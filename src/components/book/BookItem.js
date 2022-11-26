@@ -20,6 +20,7 @@ export const BookItem = ({book}) => {
                 "Content-Type" : "application/json"},
         }).then(() =>{
             console.log("deleted")
+            window.location.reload()
         })}
 
     var arr = [book.bookCategories];

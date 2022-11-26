@@ -47,7 +47,7 @@ export const EditBook = ({book}) => {
         const formData = new FormData();
         formData.append('Id', book.id)
         formData.append('AuthorId', updateBook.authorId)
-        for (let i=0; i< updateBook.categoriesIds.length; i++) {
+        for (let i=0; i < updateBook.categoriesIds.length; i++) {
             formData.append('CategoriesIds', updateBook.categoriesIds[i]);
         }
         formData.append('Name', updateBook.name)
@@ -104,7 +104,7 @@ export const EditBook = ({book}) => {
                         Book Cover:
                         <input className="form-control-file"
                                type="file"
-                               value={''}
+                               defaultValue={(e) => e.target.files[0]}
                                placeholder="photo"
                                onChange={(e) => setPhoto(e.target.files[0])}
                         ></input>
@@ -118,8 +118,8 @@ export const EditBook = ({book}) => {
                         </select>
                         <p/>
                         <select className="form-select"
-                                onChange={(e) => setAuthorId(e.target.value)}
-                                value={authorId}>
+                                onChange={(e) => setAuthorId(e.target.value)}>
+                            <option value={''} hidden> Select Author </option>
                             {authors.map(author => <option value={author.id} key={author.id}>
                                 {author.name}
                             </option>)}

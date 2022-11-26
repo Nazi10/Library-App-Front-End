@@ -1,15 +1,18 @@
-import {Outlet} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import {useState, useEffect, useContext} from "react";
 import AuthContext from "./AuthProvider";
+import moment from "moment";
 
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
     let {auth, setAuth} = useContext(AuthContext);
+    const navigate = useNavigate();
+    const localStorageData = localStorage.getItem("token");
+    const token = JSON.parse(localStorageData)
 
     useEffect(() => {
         let isMounted = true;
-        const localStorageData = localStorage.getItem("token");
-        const token = JSON.parse(localStorageData)
+
         const getToken = async () => {
             try {
                 const accessToken = token.token;
@@ -25,6 +28,12 @@ const PersistLogin = () => {
         !auth?.accessToken ? getToken() : setIsLoading(false);
         return () => isMounted = false;
     }, [])
+
+    setInterval(function(){
+        if (moment(token?.expirationTime).toDate() < moment(Date.now()).toDate()) {
+            navigate("/login")
+            window.location.reload()
+        }},10000);
 
     return (
         <>

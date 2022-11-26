@@ -22,7 +22,7 @@ export const AddAuthorBook = () => {
     const controller = new AbortController();
 
     useEffect(() => {
-        protectedAxios.get(`/api/category/getAll`,{
+        protectedAxios.get(`/api/category/getAll`, {
             signal: controller.signal,
         }).then(function
             (response) {
@@ -35,7 +35,7 @@ export const AddAuthorBook = () => {
     const handleSubmit = event => {
         const book = {name, description, photo, categoriesIds};
         const formData = new FormData();
-        for (let i=0; i< book.categoriesIds.length; i++) {
+        for (let i = 0; i < book.categoriesIds.length; i++) {
             formData.append('CategoriesIds', book.categoriesIds[i]);
         }
         formData.append('Name', book.name)
@@ -78,6 +78,7 @@ export const AddAuthorBook = () => {
                                value={name}
                                placeholder="Name"
                                onChange={(e) => setName(e.target.value)}
+                               required
                         ></input>
                         <p/>
                         <input className="form-control"
@@ -90,14 +91,15 @@ export const AddAuthorBook = () => {
                         Book Cover:
                         <input className="form-control-file"
                                type="file"
-                               value={''}
-                               placeholder="photo"
+                               defaultValue={(e) => e.target.files[0]}
                                onChange={(e) => setPhoto(e.target.files[0])}
+                               required
                         ></input>
                         <p/>
                         <select className="form-select"
                                 onChange={(e) => onChangeCategory(e?.target?.value)}
-                                multiple>
+                                multiple
+                                required>
                             {categories.map(category => <option value={category.id} key={category.id}>
                                 {category.name}
                             </option>)}

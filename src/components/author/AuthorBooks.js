@@ -21,7 +21,6 @@ export const AuthorBooks = () => {
             })
                 .then(function
                     (response) {
-                    console.log(response);
                     setBooks(response.data)
                 }).catch(function (error) {
                 console.log(error);

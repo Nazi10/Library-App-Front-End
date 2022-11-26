@@ -23,8 +23,6 @@ export const AuthorItem = ({author}) => {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
-        }).then(() => {
-            console.log("deleted")
         });
     }
 

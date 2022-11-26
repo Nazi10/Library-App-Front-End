@@ -14,11 +14,10 @@ export const Navbar = () => {
     const handleShow = () => setShow(true);
 
     const signOut = async () => {
-        debugger
         await logout();
         navigate('/login')
-        // eslint-disable-next-line no-restricted-globals
-        location.reload()
+        handleClose()
+        window.location.reload()
     }
 
     if (auth.role === "Admin") {

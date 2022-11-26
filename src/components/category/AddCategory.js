@@ -23,9 +23,7 @@ export const AddCategory = () =>{
             method: "POST",
             headers:{"Content-Type" : "application/json"},
             body: JSON.stringify(category),
-        }).then((response) =>{
-            console.log(response)
-        });
+        })
     }
 
     return(
@@ -49,6 +47,7 @@ export const AddCategory = () =>{
                                value={name}
                                placeholder="Name"
                                onChange={(e) => setName(e.target.value)}
+                               required
                         ></input>
                         <p/>
                         <input className="form-control"

@@ -17,7 +17,6 @@ export function Author() {
                 signal: controller.signal
             }).then(function
                     (response) {
-                    console.log(response);
                     setAuthors(response.data)
 
                 }).catch(function (error) {

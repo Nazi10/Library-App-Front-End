@@ -18,8 +18,6 @@ export const CategoryItem = ({category}) => {
             method: "DELETE",
             headers:{"Accept" : "application/json",
                 "Content-Type" : "application/json"},
-        }).then(() =>{
-            console.log("deleted")
         })
     }
 

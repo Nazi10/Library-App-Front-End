@@ -67,6 +67,7 @@ export const AddBook = () => {
                 categoriesIds.push(e)
             }
     }
+
     return (
     <>
             <Button variant="warning" onClick={handleShow}>
@@ -98,16 +99,17 @@ export const AddBook = () => {
                                onChange={(e) => setDescription(e.target.value)}
                         ></input>
                         <p/>
-                        Book Cover:
+                        <label>Select Book Cover</label>
                         <input className="form-control-file"
+                               required
                                type="file"
-                               value={''}
-                               placeholder="photo"
+                               defaultValue={(e) => e.target.files[0]}
                                onChange={(e) => setPhoto(e.target.files[0])}
                         ></input>
                         <p/>
                         Choose categories:
                         <select className="form-select"
+                                required
                                 onChange={(e) => onChangeCategory(e?.target?.value)}
                                 multiple>
                                 {categories.map(category => <option value={category.id} key={category.id}>
@@ -117,8 +119,9 @@ export const AddBook = () => {
                         <p/>
                         Author:
                         <select className="form-select"
-                                onChange={(e) => setAuthorId(e.target.value)}
-                                value={authorId}>
+                                required
+                                onChange={(e) => setAuthorId(e.target.value)}>
+                            <option value={''} hidden> Select Author </option>
                             {authors.map(author => <option value={author.id} key={author.id}>
                                 {author.name}
                             </option>)}

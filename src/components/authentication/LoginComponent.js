@@ -36,7 +36,6 @@ export const LoginComponent = () => {
                     withCredentials: true
                 }
             );
-            console.log(JSON.stringify(response?.data));
             const accessToken = response?.data?.token;
             localStorage.setItem("token", JSON.stringify(response.data))
             const role = response?.data?.role;

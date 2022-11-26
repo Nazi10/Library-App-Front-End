@@ -1,4 +1,4 @@
-import {useState,useEffect, useContext} from "react";
+import {useState, useEffect, useContext} from "react";
 import useAxiosPrivate from "../../api/useAxiosPrivate";
 import {Button, Modal} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -24,7 +24,7 @@ export const EditAuthorBook = ({book}) => {
     const controller = new AbortController();
 
     useEffect(() => {
-        protectedAxios.get(`/api/category/getAll`,{
+        protectedAxios.get(`/api/category/getAll`, {
             signal: controller.signal,
         }).then(function
             (response) {
@@ -40,7 +40,7 @@ export const EditAuthorBook = ({book}) => {
         const formData = new FormData();
         formData.append('Id', book.id)
         formData.append('AuthorId', auth.id)
-        for (let i=0; i< updateBook.categoriesIds.length; i++) {
+        for (let i = 0; i < updateBook.categoriesIds.length; i++) {
             formData.append('CategoriesIds', updateBook.categoriesIds[i]);
         }
         formData.append('Name', updateBook.name)
@@ -85,6 +85,7 @@ export const EditAuthorBook = ({book}) => {
                                value={name}
                                placeholder="Name"
                                onChange={(e) => setName(e.target.value)}
+                               required
                         ></input>
                         <p/>
                         <input className="form-control"
@@ -97,14 +98,15 @@ export const EditAuthorBook = ({book}) => {
                         Book Cover:
                         <input className="form-control-file"
                                type="file"
-                               value={''}
-                               placeholder="photo"
+                               defaultValue={(e) => e.target.files[0]}
                                onChange={(e) => setPhoto(e.target.files[0])}
+                               required
                         ></input>
                         <p/>
                         <select className="form-select"
                                 onChange={(e) => onChangeCategory(e?.target?.value)}
-                                multiple>
+                                multiple
+                                required>
                             {categories.map(category => <option value={category.id} key={category.id}>
                                 {category.name}
                             </option>)}

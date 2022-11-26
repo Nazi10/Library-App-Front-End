@@ -20,10 +20,11 @@ export const AuthorBookItem = ({book}) => {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
-        }).then(() => {
-            console.log("deleted")
         })
     }
+
+    var arr = [book.bookCategories];
+    let categories = arr.join(", ");
 
     return (
 
@@ -36,6 +37,10 @@ export const AuthorBookItem = ({book}) => {
                 <li className="d-flex">
                     <i className="mdi mdi-map mr-1"></i>
                     <span>{book.description}</span>
+                </li>
+                <li className="d-flex">
+                    <i className="mdi mdi-map mr-1"></i>
+                    <span>Categories: {categories}</span>
                 </li>
                 <p/>
                 <div className="position-relative">

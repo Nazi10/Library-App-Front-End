@@ -18,7 +18,6 @@ export function Category() {
                 signal: controller.signal
             }).then(function
                     (response) {
-                    console.log(response);
                     setCategories(response.data)
                 }).catch(function (error) {
                 console.log(error);

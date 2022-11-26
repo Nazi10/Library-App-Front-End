@@ -22,8 +22,6 @@ export const EditCategory = ({category}) => {
             signal: controller.signal,
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(updateCategory)
-        }).then((res) => {
-            return res
         })
     }
 
@@ -48,6 +46,7 @@ export const EditCategory = ({category}) => {
                                value={name}
                                placeholder="Name"
                                onChange={(e) => setName(e.target.value)}
+                               required
                         ></input>
                         <p/>
                         <input className="form-control"

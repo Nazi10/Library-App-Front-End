@@ -1,4 +1,4 @@
-import { useState} from "react";
+import {useState} from "react";
 import {Button, Col, Form, Modal, Row} from "react-bootstrap";
 import {faUserPlus} from '@fortawesome/fontawesome-free-solid'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -24,13 +24,11 @@ export const AddUser = () => {
 
     const handleSubmit = event => {
         const user = {name, bio, username, email, password, roleId};
-        protectedAxios.post(`/api/user/addUser`, user,{
+        protectedAxios.post(`/api/user/addUser`, user, {
             signal: controller.signal,
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(user),
-        }).then((res) => {
-            return res
         })
     }
 
@@ -40,10 +38,9 @@ export const AddUser = () => {
             protectedAxios.get(`/api/role/getAll`, {
                 signal: controller.signal
             }).then(function
-                    (response) {
-                    console.log(response);
-                    setRoles(response.data)
-                }).catch(function (error) {
+                (response) {
+                setRoles(response.data)
+            }).catch(function (error) {
                 console.log(error);
             });
         }
@@ -70,6 +67,7 @@ export const AddUser = () => {
                                value={name}
                                placeholder="Name"
                                onChange={(e) => setName(e.target.value)}
+                               required
                         ></input>
                         <p/>
                         <input className="form-control"
@@ -84,6 +82,7 @@ export const AddUser = () => {
                                value={username}
                                placeholder="Username"
                                onChange={(e) => setUsername(e.target.value)}
+                               required
                         ></input>
                         <p/>
                         <input className="form-control"
@@ -91,6 +90,7 @@ export const AddUser = () => {
                                value={email}
                                placeholder="Email"
                                onChange={(e) => setEmail(e.target.value)}
+                               required
                         ></input>
                         <p/>
                         <input className="form-control"
@@ -98,11 +98,14 @@ export const AddUser = () => {
                                value={password}
                                placeholder="Password"
                                onChange={(e) => setPassword(e.target.value)}
+                               required
                         ></input>
                         <p/>
                         <select className="form-select"
                                 onChange={(e) => setRoleId(e.target.value)}
-                                value={roleId}>
+                                value={roleId}
+                                required>
+                            <option value={''} hidden> Select Role</option>
                             {roles.map(role => <option value={role.id} key={role.id}>
                                 {role.name}
                             </option>)}

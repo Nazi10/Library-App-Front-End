@@ -21,8 +21,6 @@ export const UserItem = ({user}) => {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }
-        }).then(() => {
-            console.log("deleted")
         })
     }
 
