@@ -19,6 +19,7 @@ export const CategoryItem = ({category}) => {
             headers:{"Accept" : "application/json",
                 "Content-Type" : "application/json"},
         })
+        window.location.reload()
     }
 
     return (

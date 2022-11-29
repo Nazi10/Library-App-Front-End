@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {Button, Modal} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import useAxiosPrivate from "../../api/useAxiosPrivate";
+import Select from "react-select";
 
 export const AddBook = () => {
 
@@ -23,7 +24,7 @@ export const AddBook = () => {
     const controller = new AbortController();
 
     useEffect(() => {
-        protectedAxios.get(`/api/user/getAuthors`,{
+        protectedAxios.get(`/api/user/getAuthors`, {
             signal: controller.signal,
         }).then(function
             (response) {
@@ -31,7 +32,7 @@ export const AddBook = () => {
         }).catch(function (error) {
             console.log(error);
         });
-        protectedAxios.get(`/api/category/getAll`,{
+        protectedAxios.get(`/api/category/getAll`, {
             signal: controller.signal,
         }).then(function
             (response) {
@@ -44,8 +45,9 @@ export const AddBook = () => {
     const handleSubmit = event => {
         const book = {name, description, photo, authorId, categoriesIds};
         const formData = new FormData();
+        console.log(formData)
         formData.append('AuthorId', book.authorId)
-        for (let i=0; i< book.categoriesIds.length; i++) {
+        for (let i = 0; i < book.categoriesIds.length; i++) {
             formData.append('CategoriesIds', book.categoriesIds[i]);
         }
         formData.append('Name', book.name)
@@ -57,19 +59,24 @@ export const AddBook = () => {
                 "Content-Type": "multipart/form-data",
             },
         }).then((res) => {
-                return res;
+            return res;
         }).catch((err) => {
-                console.log(err);
+            console.log(err);
         });
     }
     const onChangeCategory = (e) => {
-            if (!categoriesIds.includes(e)) {
-                categoriesIds.push(e)
-            }
+        if (!categoriesIds.includes(e)) {
+            let array = []
+            e.forEach(e => array.push(e.value))
+            setCategoriesIds(array)
+        }
     }
 
+    let categoryOptions = categories.map(category => ({label: category.name, value: category.id}))
+    let authorOptions = authors.map(author => ({label: author.name, value: author.id}))
+
     return (
-    <>
+        <>
             <Button variant="warning" onClick={handleShow}>
                 <FontAwesomeIcon icon="fa-book"></FontAwesomeIcon> Add Book
             </Button>
@@ -107,26 +114,20 @@ export const AddBook = () => {
                                onChange={(e) => setPhoto(e.target.files[0])}
                         ></input>
                         <p/>
-                        Choose categories:
-                        <select className="form-select"
-                                required
-                                onChange={(e) => onChangeCategory(e?.target?.value)}
-                                multiple>
-                                {categories.map(category => <option value={category.id} key={category.id}>
-                                {category.name}
-                            </option>)}
-                        </select>
+                        <Select
+                            options={categoryOptions}
+                            placeholder="Select categories"
+                            onChange={onChangeCategory}
+                            isMulti
+                            closeMenuOnSelect={false}
+                            required/>
                         <p/>
-                        Author:
-                        <select className="form-select"
-                                required
-                                onChange={(e) => setAuthorId(e.target.value)}>
-                            <option value={''} hidden> Select Author </option>
-                            {authors.map(author => <option value={author.id} key={author.id}>
-                                {author.name}
-                            </option>)}
-                        </select>
-                        <p/>
+                        <Select
+                            required
+                            options={authorOptions}
+                            placeholder="Select Author"
+                            onChange={(e) => setAuthorId(e.value)}/>
+                        <br/>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
                                 Close

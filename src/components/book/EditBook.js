@@ -3,6 +3,7 @@ import useAxiosPrivate from "../../api/useAxiosPrivate";
 import {Button, Modal} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt} from '@fortawesome/fontawesome-free-solid'
+import Select from "react-select";
 
 export const EditBook = ({book}) => {
     const [authors, setAuthors] = useState([]);
@@ -42,6 +43,7 @@ export const EditBook = ({book}) => {
     }, [])
 
     const handleSubmit = event => {
+        event.preventDefault()
         const id = book.id
         const updateBook = {id, name, description, photo, authorId, categoriesIds};
         const formData = new FormData();
@@ -65,9 +67,15 @@ export const EditBook = ({book}) => {
         });
     }
 
+    let categoryOptions = categories.map(category => ({label: category.name, value: category.id}))
+    let authorOptions = authors.map(author => ({label: author.name, value: author.id}))
+
     const onChangeCategory = (e) => {
         if (!categoriesIds.includes(e)) {
-            categoriesIds.push(e)
+            let array = []
+            e.forEach(e => array.push(e.value))
+            console.log(array)
+            setCategoriesIds(array)
         }
     }
 
@@ -109,22 +117,19 @@ export const EditBook = ({book}) => {
                                onChange={(e) => setPhoto(e.target.files[0])}
                         ></input>
                         <p/>
-                        <select className="form-select"
-                                onChange={(e) => onChangeCategory(e?.target?.value)}
-                                multiple>
-                            {categories.map(category => <option value={category.id} key={category.id}>
-                                {category.name}
-                            </option>)}
-                        </select>
+                        <Select
+                            options={categoryOptions}
+                            placeholder="Select categories"
+                            onChange={onChangeCategory}
+                            isMulti
+                            closeMenuOnSelect={false}
+                        />
                         <p/>
-                        <select className="form-select"
-                                onChange={(e) => setAuthorId(e.target.value)}>
-                            <option value={''} hidden> Select Author </option>
-                            {authors.map(author => <option value={author.id} key={author.id}>
-                                {author.name}
-                            </option>)}
-                        </select>
-                        <p/>
+                        <Select
+                            required
+                            options={authorOptions}
+                            placeholder="Select Author"
+                            onChange={(e) => setAuthorId(e.value)}/>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
                                 Close

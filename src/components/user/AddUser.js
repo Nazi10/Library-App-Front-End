@@ -4,6 +4,7 @@ import {faUserPlus} from '@fortawesome/fontawesome-free-solid'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEffect, useRef} from "react";
 import useAxiosPrivate from "../../api/useAxiosPrivate";
+import Select from "react-select";
 
 export const AddUser = () => {
     const [show, setShow] = useState(false);
@@ -45,6 +46,8 @@ export const AddUser = () => {
             });
         }
     }, [])
+
+    let roleOptions = roles.map(role => ({label: role.name, value: role.id}))
 
     return (
         <>
@@ -101,15 +104,11 @@ export const AddUser = () => {
                                required
                         ></input>
                         <p/>
-                        <select className="form-select"
-                                onChange={(e) => setRoleId(e.target.value)}
-                                value={roleId}
-                                required>
-                            <option value={''} hidden> Select Role</option>
-                            {roles.map(role => <option value={role.id} key={role.id}>
-                                {role.name}
-                            </option>)}
-                        </select>
+                        <Select
+                            required
+                            options={roleOptions}
+                            placeholder="Select Role"
+                            onChange={(e) => setRoleId(e.value)}/>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
                                 Close

@@ -4,6 +4,7 @@ import {Button, Modal} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt} from '@fortawesome/fontawesome-free-solid'
 import AuthContext from "../authentication/AuthProvider";
+import Select from "react-select";
 
 export const EditAuthorBook = ({book}) => {
     const {auth} = useContext(AuthContext);
@@ -60,9 +61,14 @@ export const EditAuthorBook = ({book}) => {
 
     const onChangeCategory = (e) => {
         if (!categoriesIds.includes(e)) {
-            categoriesIds.push(e)
+            let array = []
+            e.forEach(e => array.push(e.value))
+            console.log(array)
+            setCategoriesIds(array)
         }
     }
+
+    let categoryOptions = categories.map(category => ({label: category.name, value: category.id}))
 
     return (
         <>
@@ -103,14 +109,13 @@ export const EditAuthorBook = ({book}) => {
                                required
                         ></input>
                         <p/>
-                        <select className="form-select"
-                                onChange={(e) => onChangeCategory(e?.target?.value)}
-                                multiple
-                                required>
-                            {categories.map(category => <option value={category.id} key={category.id}>
-                                {category.name}
-                            </option>)}
-                        </select>
+                        <Select
+                            options={categoryOptions}
+                            placeholder="Select categories"
+                            onChange={onChangeCategory}
+                            isMulti
+                            closeMenuOnSelect={false}
+                            required/>
                         <p/>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>

@@ -22,6 +22,7 @@ export const UserItem = ({user}) => {
                 "Content-Type": "application/json"
             }
         })
+        window.location.reload()
     }
 
     return (

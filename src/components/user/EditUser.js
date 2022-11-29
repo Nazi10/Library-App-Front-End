@@ -3,6 +3,7 @@ import useAxiosPrivate from "../../api/useAxiosPrivate";
 import {Button, Modal} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt} from '@fortawesome/fontawesome-free-solid'
+import Select from "react-select";
 
 export const EditUser = ({user}) => {
     const [name, setName] = useState(user.name);
@@ -45,6 +46,8 @@ export const EditUser = ({user}) => {
             body: JSON.stringify(updateUser)
         })
     }
+
+    let roleOptions = roles.map(role => ({label: role.name, value: role.id}))
 
     return (
         <>
@@ -101,15 +104,11 @@ export const EditUser = ({user}) => {
                                required
                         ></input>
                         <p/>
-                        <select className="form-select"
-                                onChange={(e) => setRoleId(e.target.value)}
-                                value={roleId}
-                                required>
-                            <option value={''} hidden> Select Author </option>
-                            {roles.map(role => <option value={role.id} key={role.id}>
-                                {role.name}
-                            </option>)}
-                        </select>
+                        <Select
+                            required
+                            options={roleOptions}
+                            placeholder="Select Role"
+                            onChange={(e) => setRoleId(e.value)}/>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
                                 Close

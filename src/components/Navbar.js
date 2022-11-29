@@ -40,6 +40,7 @@ export const Navbar = () => {
                         <Nav.Link to="/user" as={NavLink} className="d-flex align-items-center">
                             Users <img src={require("../assets/user.png")} height="18"/>
                         </Nav.Link>
+
                         <Button className="btn-danger position-relative start-100" onClick={handleShow}>
                             Sign Out
                         </Button>
